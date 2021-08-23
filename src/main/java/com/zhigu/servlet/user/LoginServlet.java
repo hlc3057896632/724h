@@ -24,10 +24,10 @@ public class LoginServlet extends HttpServlet {
         User user = userService.login(account, password);
         if(user!=null){
             req.getSession().setAttribute(Constants.USER_SESSION,user);
-            resp.sendRedirect("/724_war/home.jsp");
+            resp.sendRedirect(req.getContextPath()+"/jsp/home.jsp");
         }else{
             req.setAttribute("error","用户名或密码不正确");
-            req.getRequestDispatcher("/login.jsp").forward(req,resp);
+            req.getRequestDispatcher("login.jsp").forward(req,resp);
         }
 
     }

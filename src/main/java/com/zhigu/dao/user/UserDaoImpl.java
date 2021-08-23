@@ -30,6 +30,7 @@ public class UserDaoImpl implements UserDao{
                 user.setBirthday(rs.getDate("birthday"));
                 user.setPhone(rs.getString("phone"));
                 user.setAddress(rs.getString("address"));
+                user.setRoleId(rs.getInt("roleId"));
                 user.setCreatedUserId(rs.getInt("createdUserId"));
                 user.setCreatedTime(rs.getTimestamp("createdTime"));
                 user.setUpdatedUserId(rs.getInt("updatedUserId"));
@@ -38,5 +39,18 @@ public class UserDaoImpl implements UserDao{
             BaseDao.closeResource(null, pstm, rs);
         }
         return user;
+    }
+
+    @Override
+    public int updatePwd(Connection connection, int id, String pwd) throws SQLException {
+        int flag = 0;
+        PreparedStatement pstm = null;
+        if(connection !=null){
+            String sql = "update t_sys_user set password= ? where id = ?";
+            Object[] params = {pwd, id};
+            flag = BaseDao.execute(connection,pstm,sql,params);
+            BaseDao.closeResource(null,pstm,null);
+        }
+        return flag;
     }
 }

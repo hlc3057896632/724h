@@ -46,13 +46,13 @@ public class BaseDao {
         return resultSet;
     }
     //编写增删改公共方法
-    public static int execute(Connection connection,String sql,Object[] params,PreparedStatement preparedStatement) throws SQLException {
+    public static int execute(Connection connection,PreparedStatement preparedStatement,String sql,Object[] params) throws SQLException {
+        int updateRows = 0;
         preparedStatement = connection.prepareStatement(sql);
         for (int i = 0; i < params.length; i++) {
             preparedStatement.setObject(i+1,params[i]);
         }
-
-        int updateRows = preparedStatement.executeUpdate();
+         updateRows = preparedStatement.executeUpdate();
         return updateRows;
     }
     public static boolean closeResource(Connection connection,PreparedStatement preparedStatement,ResultSet resultSet){
